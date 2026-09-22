@@ -1,0 +1,17 @@
+{
+  "name": "Ghumgham \u2022 Korea Japan Family Trip",
+  "short_name": "Ghumgham",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#0b1220",
+  "description": "Editable family travel app for Korea and Japan",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

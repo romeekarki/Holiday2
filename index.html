@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Ghumgham • Family Trip</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#111827;--muted:#6b7280;--accent:#2563eb;--line:#e5e7eb;--danger:#dc2626}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;background:var(--bg);color:var(--ink);padding-bottom:78px}
+header{background:#0b1220;color:#fff;padding:calc(env(safe-area-inset-top) + 18px) 18px 20px;position:sticky;top:0;z-index:5}
+h1{margin:0;font-size:28px}.sub{opacity:.75;margin-top:4px;font-size:13px}
+main{max-width:760px;margin:auto;padding:16px}.hero{background:linear-gradient(135deg,#172554,#2563eb);color:white;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 10px 30px #0001}.count{font-size:42px;font-weight:800;margin:5px 0}.small{font-size:13px;opacity:.78}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px #00000008}.card h2{font-size:18px;margin:0 0 10px}.pill{display:inline-block;background:#eff6ff;color:#1d4ed8;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:700;margin:2px}.row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding:10px 0}.row:first-of-type{border-top:0}.muted{color:var(--muted)}button{border:0;border-radius:12px;padding:10px 13px;background:var(--accent);color:#fff;font-weight:700;font-size:14px}button.secondary{background:#eef2ff;color:#1d4ed8}button.danger{background:#fee2e2;color:#b91c1c}.actions{display:flex;gap:8px;flex-wrap:wrap}.section{display:none}.section.active{display:block}.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:10}.tabs button{background:transparent;color:#6b7280;padding:7px 5px;font-size:11px}.tabs button.active{color:#2563eb}.tabs span{display:block;font-size:20px}.listitem{cursor:pointer}.notice{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:14px;padding:12px;font-size:13px}.ok{background:#ecfdf5;border-color:#a7f3d0;color:#065f46}
+input,textarea,select{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:10px;font:inherit;background:#fff;margin:4px 0 10px}label{font-size:12px;font-weight:700;color:#4b5563}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.full{grid-column:1/-1}.empty{color:var(--muted);text-align:center;padding:25px}.exp{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)}
+@media(max-width:430px){.grid{grid-template-columns:1fr 1fr}.count{font-size:36px}}
+</style>
+</head>
+<body>
+<header><h1>🌏 Ghumgham</h1><div class="sub">Korea 🇰🇷 • Japan 🇯🇵 • Family of 4</div></header>
+<main>
+<section id="home" class="section active"></section>
+<section id="flights" class="section"></section>
+<section id="stay" class="section"></section>
+<section id="places" class="section"></section>
+<section id="money" class="section"></section>
+<section id="more" class="section"></section>
+</main>
+<nav class="tabs">
+<button data-tab="home" class="active"><span>🏠</span>Home</button>
+<button data-tab="flights"><span>✈️</span>Flights</button>
+<button data-tab="stay"><span>🏨</span>Stay</button>
+<button data-tab="places"><span>📍</span>Places</button>
+<button data-tab="money"><span>💴</span>Money</button>
+<button data-tab="more"><span>➕</span>More</button>
+</nav>
+<script>
+const KEY="ghumgham-v1";
+const seed={
+tripStart:"2026-09-26",tripEnd:"2026-10-11",
+flights:[
+{id:1,date:"2026-09-26",flight:"QF670",from:"Adelaide (ADL)",to:"Melbourne (MEL)",dep:"20:30",arr:"21:50",ref:"DETIT4",note:"Scheduled times; verify before travel."},
+{id:2,date:"2026-09-26",flight:"QF29",from:"Melbourne (MEL)",to:"Hong Kong (HKG)",dep:"10:15",arr:"17:55",ref:"DETIT4",note:"Scheduled times shown in local airport time; Qantas/codeshare status can change."},
+{id:3,date:"2026-09-26",flight:"QF8233",from:"Hong Kong (HKG)",to:"Seoul (ICN)",dep:"",arr:"",ref:"DETIT4",note:"Codeshare: verify operating carrier and scheduled time."},
+{id:4,date:"2026-09-30",flight:"Seoul → Osaka",from:"Seoul (ICN)",to:"Osaka (KIX)",dep:"",arr:"",ref:"DU74U7",note:"Add flight number/time from booking when available."},
+{id:5,date:"2026-10-10",flight:"QF80",from:"Tokyo Narita (NRT)",to:"Melbourne (MEL)",dep:"",arr:"",ref:"",note:"Scheduled time to be verified for 10 Oct 2026."},
+{id:6,date:"2026-10-11",flight:"QF679",from:"Melbourne (MEL)",to:"Adelaide (ADL)",dep:"10:25",arr:"11:15",ref:"",note:"Scheduled times shown; verify before travel."}
+],
+stays:[
+{city:"Seoul",hotel:"Nine Tree by Parnas Seoul Dongdaemun",checkin:"2026-09-27",checkout:"2026-09-30",note:"3 nights"},
+{city:"Osaka",hotel:"Osaka View Hotel Honmachi",checkin:"2026-09-30",checkout:"2026-10-03",note:"3 nights"},
+{city:"Kyoto",hotel:"RIHGA Royal Hotel Kyoto",checkin:"2026-10-03",checkout:"2026-10-06",note:"3 nights"},
+{city:"Tokyo",hotel:"sequence SUIDOBASHI",checkin:"2026-10-06",checkout:"2026-10-10",note:"4 nights"}
+],
+trains:[
+{date:"2026-10-03",route:"Osaka → Kyoto",type:"Train",time:"",ref:""},
+{date:"2026-10-06",route:"Kyoto → Tokyo",type:"Shinkansen / bullet train",time:"",ref:""}
+],
+places:{
+Seoul:["N Seoul Tower / Namsan Cable Car","Cheonggyecheon Stream","Bukchon Hanok Village","Dongdaemun family activities"],
+Osaka:["Universal Studios Japan","Super Nintendo World","Osaka Aquarium Kaiyukan","Kids Plaza Osaka","Osaka Castle Park","Dotonbori"],
+Kyoto:["Kyoto Railway Museum","Kyoto Aquarium","Umekoji Park","Arashiyama","Monkey Park","Kyoto Zoo"],
+Tokyo:["Tokyo Disneyland / DisneySea","teamLab","Tokyo Skytree","Ueno Zoo","Asakusa","Odaiba","Science museums"]
+},
+expenses:[],notes:""
+};
+let data=JSON.parse(localStorage.getItem(KEY)||"null")||seed;
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function fmt(d){return new Date(d+"T12:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})}
+function countdown(){let n=(new Date(data.tripStart+"T00:00:00")-new Date())/86400000;return Math.max(0,Math.ceil(n))}
+function flightCard(f){return `<div class="card"><div><span class="pill">${esc(f.flight)}</span><span class="pill">${fmt(f.date)}</span></div><h2>${esc(f.from)} → ${esc(f.to)}</h2><div class="grid"><div><div class="muted">Departure</div><b>${f.dep||"Add time"}</b></div><div><div class="muted">Arrival</div><b>${f.arr||"Add time"}</b></div></div><div class="row"><span>Booking</span><b>${esc(f.ref||"Not added")}</b></div><div class="small muted">${esc(f.note)}</div></div>`}
+function render(){
+home.innerHTML=`<div class="hero"><div class="small">TRIP COUNTDOWN</div><div class="count">${countdown()} days</div><div>Adelaide → Seoul → Osaka → Kyoto → Tokyo → Adelaide</div><div class="small">26 Sep – 11 Oct 2026 • 2 adults + 2 kids (5 & 7)</div></div>
+<div class="grid"><div class="card"><h2>✈️ Next flight</h2><b>QF670</b><p>Adelaide → Melbourne</p><span class="pill">26 Sep • 20:30</span></div><div class="card"><h2>🏨 First stay</h2><b>Seoul</b><p>27–30 Sep</p><span class="pill">Nine Tree Dongdaemun</span></div></div>
+<div class="card"><h2>🧳 Trip at a glance</h2><div class="row"><span>Seoul</span><b>27–30 Sep</b></div><div class="row"><span>Osaka</span><b>30 Sep–3 Oct</b></div><div class="row"><span>Kyoto</span><b>3–6 Oct</b></div><div class="row"><span>Tokyo</span><b>6–10 Oct</b></div></div>
+<div class="notice">Flight times marked “Add time” need to be entered from your booking. The app is designed so you can edit them anytime.</div>`;
+flights.innerHTML=`<div class="card"><h2>✈️ Flights</h2><div class="small">Your flight numbers and booking references are saved on this device.</div></div>${data.flights.map(flightCard).join("")}<div class="card"><div class="notice">Qantas advises that codeshare flight times should be confirmed with the operating carrier. Use the flight number to verify before departure.</div></div>`;
+stay.innerHTML=`<div class="card"><h2>🏨 Hotels & 🚄 Trains</h2></div>${data.stays.map(s=>`<div class="card"><span class="pill">${esc(s.city)}</span><h2>${esc(s.hotel)}</h2><div class="row"><span>Check-in</span><b>${fmt(s.checkin)}</b></div><div class="row"><span>Check-out</span><b>${fmt(s.checkout)}</b></div><div class="muted">${esc(s.note)}</div></div>`).join("")}<div class="card"><h2>🚄 Trains</h2>${data.trains.map(t=>`<div class="row"><div><b>${esc(t.route)}</b><div class="muted">${fmt(t.date)} • ${esc(t.type)}</div></div><b>${esc(t.time||"Add time")}</b></div>`).join("")}</div>`;
+places.innerHTML=`<div class="card"><h2>📍 Family-friendly places</h2><div class="small">Chosen with your 5- and 7-year-olds in mind. Tap “Add place” below to expand your list.</div></div>${Object.entries(data.places).map(([city,arr])=>`<div class="card"><h2>${city}</h2>${arr.map((x,i)=>`<div class="row"><span>📍 ${esc(x)}</span><button class="secondary" onclick="addNote('${city}: ${esc(x)}')">Save</button></div>`).join("")}</div>`).join("")}`;
+money.innerHTML=`<div class="card"><h2>💴 Currency</h2><div class="formgrid"><div><label>AUD</label><input id="aud" type="number" value="100" oninput="fx()"></div><div><label>JPY (manual rate)</label><input id="jpyRate" type="number" value="112" step=".01" oninput="fx()"></div><div><label>KRW (enter current rate)</label><input id="krwRate" type="number" placeholder="e.g. 900" oninput="fx()"></div><div><label>HKD (enter current rate)</label><input id="hkdRate" type="number" placeholder="e.g. 5.2" oninput="fx()"></div></div><div id="fxout" class="ok" style="padding:12px;border-radius:12px"></div></div><div class="card"><h2>💳 Expenses</h2><div id="exps">${data.expenses.length?data.expenses.map((e,i)=>`<div class="exp"><span>${esc(e.name)}<br><small class="muted">${esc(e.city||"")}</small></span><b>A$${Number(e.amount).toFixed(2)}</b></div>`).join(""):"<div class='empty'>No expenses yet.</div>"}</div></div>`;
+more.innerHTML=`<div class="card"><h2>➕ Add / Edit</h2><p class="muted">Your changes are saved locally on this iPhone.</p><div class="actions"><button onclick="editFlight()">Edit flight</button><button onclick="addExpense()">Add expense</button><button onclick="addTrain()">Add train</button><button onclick="addPlace()">Add place</button></div></div><div class="card"><h2>📝 My notes</h2><textarea id="notes" rows="7" placeholder="Packing list, restaurant bookings, reminders...">${esc(data.notes)}</textarea><button onclick="data.notes=document.getElementById('notes').value;save()">Save notes</button></div><div class="card"><h2>🔄 Data</h2><div class="actions"><button class="secondary" onclick="downloadData()">Backup data</button><button class="secondary" onclick="importData()">Restore data</button><button class="danger" onclick="resetData()">Reset app data</button></div></div>`;
+fx();
+}
+function fx(){let a=Number(document.getElementById("aud")?.value||0),j=Number(document.getElementById("jpyRate")?.value||0),k=Number(document.getElementById("krwRate")?.value||0),h=Number(document.getElementById("hkdRate")?.value||0);let el=document.getElementById("fxout");if(el)el.innerHTML=`A$${a.toFixed(2)} ≈ ¥${(a*j).toFixed(0)}${k?` • ₩${(a*k).toFixed(0)}`:""}${h?` • HK$${(a*h).toFixed(2)}`:""}`;}
+function editFlight(){let f=data.flights[0];let t=prompt("Which flight? Enter flight number",f.flight);let x=data.flights.find(v=>v.flight===t);if(!x)return alert("Flight not found");let dep=prompt("Departure time",x.dep||"");if(dep!==null)x.dep=dep;let arr=prompt("Arrival time",x.arr||"");if(arr!==null)x.arr=arr;let ref=prompt("Booking reference",x.ref||"");if(ref!==null)x.ref=ref;save()}
+function addExpense(){let name=prompt("Expense name");if(!name)return;let amount=prompt("AUD amount","0");let city=prompt("City","");data.expenses.push({name,amount,city});save()}
+function addTrain(){let route=prompt("Train route","");if(!route)return;let date=prompt("Date YYYY-MM-DD","2026-10-06");let time=prompt("Time","");let ref=prompt("Booking/reference","");data.trains.push({route,date,time,ref,type:"Train"});save()}
+function addPlace(){let city=prompt("City","Tokyo");let p=prompt("Place/attraction");if(!p)return;(data.places[city]??=[]).push(p);save()}
+function addNote(t){data.notes=(data.notes?data.notes+"\n":"")+t;save();alert("Saved to My notes")}
+function downloadData(){let b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="ghumgham-backup.json";a.click()}
+function importData(){let i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=()=>{let r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save()}catch(e){alert("Invalid backup")}};r.readAsText(i.files[0])};i.click()}
+function resetData(){if(confirm("Reset all changes and restore the original trip?")){localStorage.removeItem(KEY);location.reload()}}
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(b.dataset.tab).classList.add("active");document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("active"));b.classList.add("active");window.scrollTo(0,0)});
+render();
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+</body></html>
